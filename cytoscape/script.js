@@ -1,3 +1,14 @@
+function shorten(string,length){
+      if (string.length>length) {
+        return string.substring(0,20)+"...";
+      }
+      else {
+        return string;
+      }
+}
+
+
+
 $(document).ready(function(){
 
   $.get(
@@ -12,7 +23,8 @@ $(document).ready(function(){
       
       // setup root node
       var root_name = r.bibliographic.title;
-      elements.nodes[0] =  { data: { id: "root", name: root_name, name_short: root_name.substring(0,20), weight: 65, faveColor: '#6FB1FC' } };
+
+      elements.nodes[0] =  { data: { id: "root", name: root_name, name_short: shorten(root_name,20), weight: 65, faveColor: '#6FB1FC' } };
 
       for (i=0;i<r.references.length;i++) {
         var title = r.references[i].bibliographic.title;
@@ -36,7 +48,7 @@ $(document).ready(function(){
         }
         
         // add nodes
-        elements.nodes[i+1] =  { data: { id: i.toString(), name: name, name_short: name.substring(0,20), weight: 65, faveColor: '#6FB1FC', width: "10" } };
+        elements.nodes[i+1] =  { data: { id: i.toString(), name: name, name_short: shorten(name,20), weight: 65, faveColor: '#6FB1FC', width: "10" } };
         
         // add edges  
         elements.edges[i] = { data: { source: i.toString(), target: "root", faveColor: '#6FB1FC', strength: r.references[i].citation_groups.length } };
